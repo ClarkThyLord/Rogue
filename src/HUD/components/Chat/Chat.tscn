@@ -1,0 +1,110 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Panel
+
+
+
+# References
+onready var Output : RichTextLabel = $VBoxContainer/ScrollContainer/Output
+onready var _Input : LineEdit = $VBoxContainer/HBoxContainer/Input
+onready var Enter : Button = $VBoxContainer/HBoxContainer/Enter
+onready var Hide : Button = $VBoxContainer/HBoxContainer/Hide
+
+
+
+# Declarations
+var past_mouse_mode = null
+
+
+# Core
+func add_msg(msg : String) -> void: if msg.length() > 0: Output.bbcode_text += '\\n' + msg
+
+
+func _on_Chat_visibility_changed():
+	if visible:
+		_Input.grab_focus()
+		past_mouse_mode = Input.get_mouse_mode()
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	elif past_mouse_mode != null:
+		Input.set_mouse_mode(past_mouse_mode)
+		past_mouse_mode = null
+
+func _on_Input_entered(new_text) -> void:
+	add_msg(new_text)
+	_Input.clear()
+
+func _on_Enter_pressed() -> void:
+	add_msg(_Input.text)
+	_Input.clear()
+
+func _on_Hide_pressed() -> void: set_visible(false)
+"
+
+[node name="Chat" type="Panel"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = -7.0
+margin_bottom = -7.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+margin_right = 1010.0
+margin_bottom = 550.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="Output" type="RichTextLabel" parent="VBoxContainer/ScrollContainer"]
+margin_right = 1010.0
+margin_bottom = 550.0
+focus_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+bbcode_text = "[u][i]Welcome to Rogue![/i][/u]"
+text = "Welcome to Rogue!"
+scroll_following = true
+selection_enabled = true
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+self_modulate = Color( 1, 1, 1, 0.627451 )
+margin_top = 554.0
+margin_right = 1010.0
+margin_bottom = 558.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 562.0
+margin_right = 1010.0
+margin_bottom = 586.0
+
+[node name="Input" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+margin_right = 915.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+clear_button_enabled = true
+placeholder_text = "Input text..."
+caret_blink = true
+
+[node name="Enter" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 919.0
+margin_right = 964.0
+margin_bottom = 24.0
+text = "Enter"
+
+[node name="Hide" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 968.0
+margin_right = 1010.0
+margin_bottom = 24.0
+text = "Hide"
+[connection signal="visibility_changed" from="." to="." method="_on_Chat_visibility_changed"]
+[connection signal="text_entered" from="VBoxContainer/HBoxContainer/Input" to="." method="_on_Input_entered"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Enter" to="." method="_on_Enter_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Hide" to="." method="_on_Hide_pressed"]
