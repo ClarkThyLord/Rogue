@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-	<a href="https://en.wikipedia.org/wiki/MIT_License">
+	<a href="./LICENSE">
 		<img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="LICENSE">
 	</a>
 	<a href="https://game-icons.net/">
