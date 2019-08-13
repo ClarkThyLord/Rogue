@@ -21,10 +21,11 @@ onready var VJSRight := $VirtualControls/VirtualJoystickR
 
 
 # Core
-func _ready(): VirtualControls.visible = OS.has_touchscreen_ui_hint()
+func _ready(): VirtualControls.visible = OS.has_touchscreen_ui_hint() or true
 
 func _input(event): if Input.is_action_just_released('chat_open') and not get_node('/root/HUD').is_chatting(): toggle_chat()
 
+# HUD Chat
 func is_chatting() -> bool: return Chat.visible
 func toggle_chat() -> void: open_chat() if not is_chatting() else close_chat()
 func open_chat() -> void: Chat.visible = true
@@ -33,6 +34,10 @@ func close_chat() -> void: Chat.visible = false
 func _on_ChatToggle_pressed() -> void: open_chat()
 
 func _on_Chat_visibility_changed() -> void: ChatToggle.visible = !Chat.visible
+
+# HUD VirtualJoySticks
+func get_left_joystick(): return VJSLeft
+func get_right_joystick(): return VJSRight
 "
 
 [node name="HUD" type="Control"]

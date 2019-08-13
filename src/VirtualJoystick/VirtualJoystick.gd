@@ -13,6 +13,12 @@ onready var Top : TextureRect = $Base/Top
 var Angle : float = 0
 var Distance : float = 0
 var JoystickPosition : Vector2 = Vector2()
+enum Directions {
+	UpLeft,   Up,   UpRight,
+	Left,     None, Right,
+	DownLeft, Down, DownRight
+}
+var Direction = Directions.None
 
 var touch_index
 
@@ -101,6 +107,9 @@ func _input(event):
 			Distance = _distance / (Base.get_size().x / 2)
 			var joystick_position = Vector2(-_distance * cos(Angle), _distance * sin(Angle))
 			JoystickPosition = joystick_position / (Base.get_size().x / 2)
+			
+			var degrees = rad2deg(Angle)
+			print(degrees + 180)
 			
 			Top.set_position(Base.get_size() / 2 + Vector2(joystick_position.x, -joystick_position.y) - Top.get_size() / 2)
 			get_tree().set_input_as_handled()
