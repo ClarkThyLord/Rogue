@@ -14,6 +14,11 @@ var Angle : float = 0
 var Distance : float = 0
 var JoystickPosition : Vector2 = Vector2()
 
+var UpHint : bool = false
+var RightHint : bool = false
+var DownHint : bool = false
+var LeftHint : bool = false
+
 var touch_index
 
 
@@ -101,6 +106,12 @@ func _input(event):
 			Distance = _distance / (Base.get_size().x / 2)
 			var joystick_position = Vector2(-_distance * cos(Angle), _distance * sin(Angle))
 			JoystickPosition = joystick_position / (Base.get_size().x / 2)
+			
+			var angle = rad2deg(Angle) + 180
+			UpHint = angle <= 330 and angle >= 210
+			RightHint = angle <= 60 or angle >= 300
+			DownHint = angle <= 150 and angle >= 30
+			LeftHint = angle <= 240 and angle >= 120
 			
 			Top.set_position(Base.get_size() / 2 + Vector2(joystick_position.x, -joystick_position.y) - Top.get_size() / 2)
 			get_tree().set_input_as_handled()
