@@ -55,6 +55,10 @@ func set_active(active : bool) -> void:
 		Angle = 0
 		Distance = 0
 		JoystickPosition = Vector2()
+		UpHint = false
+		RightHint = false
+		DownHint = false
+		LeftHint = false
 		touch_index = null
 		if ReturnToOrigin: to_origin()
 	emit_signal('activated', active)
