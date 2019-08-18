@@ -6,7 +6,7 @@ script/source = "extends Spatial
 
 
 # Declarations
-var ViewingSpeed : float = 5.0
+var ViewingSpeed : float = 2
 var MovementSpeed : float = 25.0
 var MovementAccelerator : float = 3
 
@@ -39,10 +39,10 @@ func _process(delta):
 	if not get_node('/root/HUD').is_chatting() and not Possessing:
 		var movement = Vector3()
 		
-		if get_node('/root/HUD').VJSLeft.UpHint: rotation.x += deg2rad(ViewingSpeed)
-		if get_node('/root/HUD').VJSLeft.DownHint: rotation.x += deg2rad(ViewingSpeed * -1)
-		if get_node('/root/HUD').VJSLeft.RightHint: rotation.y += deg2rad(ViewingSpeed * -1)
-		if get_node('/root/HUD').VJSLeft.LeftHint: rotation.y += deg2rad(ViewingSpeed)
+		if get_node('/root/HUD').VJSLeft.UpHint: rotation.x += deg2rad(delta * ViewingSpeed * 35)
+		if get_node('/root/HUD').VJSLeft.DownHint: rotation.x += deg2rad(delta * ViewingSpeed * 35 * -1)
+		if get_node('/root/HUD').VJSLeft.RightHint: rotation.y += deg2rad(delta * ViewingSpeed * 35 * -1)
+		if get_node('/root/HUD').VJSLeft.LeftHint: rotation.y += deg2rad(delta * ViewingSpeed * 35)
 		
 		if Input.is_action_pressed('player_forward') or get_node('/root/HUD').VJSRight.UpHint: movement += Vector3.FORWARD
 		if Input.is_action_pressed('player_backwards') or get_node('/root/HUD').VJSRight.DownHint: movement += Vector3.BACK
