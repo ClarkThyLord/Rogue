@@ -36,6 +36,7 @@ func _input(event):
 			rotation.y += deg2rad(event.relative.normalized().x * ViewingSpeed * -1)
 
 func _process(delta):
+	print(rad2deg(global_transform.basis.get_euler().y) + 180)
 	if not get_node('/root/HUD').is_chatting() and not Possessing:
 		var movement = Vector3()
 		
