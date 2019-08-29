@@ -20,9 +20,22 @@ func _process(delta) -> void: update()
 
 func _draw() -> void:
 	if CompassBearings:
-		if Orientation >= 270 or Orientation <= 90:
+		if Orientation <= 90:
+			var pos = rect_size / 2
+			pos.x += ((0 - Orientation) % 180) * rect_size.x / 180
+			
 			var char_size : Vector2 = get_font('font').get_string_size('N')
 			char_size.x = char_size.x / 2
 			char_size.y = -char_size.y / 2
-			draw_char(get_font('font'), (rect_size / 2)  - char_size, 'N', '')
+			
+			draw_char(get_font('font'), pos - char_size, 'N', '')
+		elif Orientation >= 270:
+			var pos = rect_size / 2
+			pos.x += ((360 - Orientation) % 180) * rect_size.x / 180
+			
+			var char_size : Vector2 = get_font('font').get_string_size('N')
+			char_size.x = char_size.x / 2
+			char_size.y = -char_size.y / 2
+			
+			draw_char(get_font('font'), pos - char_size, 'N', '')
 #	draw_circle(rect_size / 2, 3, Color.blue)
