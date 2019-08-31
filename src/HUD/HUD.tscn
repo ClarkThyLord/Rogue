@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/VirtualJoystick/VirtualJoystick.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/VirtualJoysticks/dark/base.png" type="Texture" id=2]
 [ext_resource path="res://assets/VirtualJoysticks/dark/top.png" type="Texture" id=3]
-[ext_resource path="res://src/HUD/components/Chat/Chat.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/Compass/Compass.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/HUD/components/Chat/Chat.tscn" type="PackedScene" id=5]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
@@ -15,6 +16,8 @@ onready var Base : Control = $Base
 onready var Chat := $Base/Chat
 onready var ChatToggle : Button = $Base/ChatToggle
 
+onready var Compass := $Game/Compass
+
 onready var VirtualControls : Control = $VirtualControls
 onready var VJSLeft := $VirtualControls/VirtualJoystickL
 onready var VJSRight := $VirtualControls/VirtualJoystickR
@@ -24,6 +27,11 @@ onready var VJSRight := $VirtualControls/VirtualJoystickR
 func _ready(): VirtualControls.visible = OS.has_touchscreen_ui_hint() or true
 
 func _input(event): if Input.is_action_just_released('chat_open') and not get_node('/root/HUD').is_chatting(): toggle_chat()
+
+
+# Compass
+func set_orientation(orientation : int) -> void: Compass.Orientation = orientation
+
 
 # Chat
 func is_chatting() -> bool: return Chat.visible
@@ -75,6 +83,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 1
 
+[node name="Compass" parent="Game" instance=ExtResource( 4 )]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+margin_left = -200.0
+margin_right = 200.0
+margin_bottom = 32.0
+
 [node name="Base" type="Control" parent="."]
 editor/display_folded = true
 anchor_right = 1.0
@@ -88,7 +104,7 @@ margin_top = -20.0
 margin_right = 40.0
 text = "Chat"
 
-[node name="Chat" parent="Base" instance=ExtResource( 4 )]
+[node name="Chat" parent="Base" instance=ExtResource( 5 )]
 visible = false
 anchor_top = 1.0
 anchor_right = 0.0
