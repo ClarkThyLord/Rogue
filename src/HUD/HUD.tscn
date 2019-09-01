@@ -30,6 +30,7 @@ func _input(event): if Input.is_action_just_released('chat_open') and not get_no
 
 
 # Compass
+func set_orientation(orientation : int) -> void: Compass.Orientation = orientation
 func set_bearing(bearing : Vector2) -> void: Compass.Bearing = bearing
 
 
