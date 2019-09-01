@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "Entity",
 "language": "GDScript",
 "path": "res://src/entities/Entity.gd"
+}, {
+"base": "Node",
+"class": "Waypoint",
+"language": "GDScript",
+"path": "res://src/Compass/Waypoint.gd"
 } ]
 _global_script_class_icons={
-"Entity": ""
+"Entity": "",
+"Waypoint": ""
 }
 
 [application]
